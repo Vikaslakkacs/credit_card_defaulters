@@ -7,4 +7,3 @@ gunicorn
 pyYAML
 evidently
 dill
--e .
