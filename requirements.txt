@@ -2,3 +2,9 @@ numpy
 matplotlib
 pandas
 seaborn
+Flask
+gunicorn
+pyYAML
+evidently
+dill
+-e .
