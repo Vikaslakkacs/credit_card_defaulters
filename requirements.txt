@@ -1,9 +1,10 @@
-numpy
-matplotlib
-pandas
-seaborn
 Flask
 gunicorn
+sklearn
+pandas
+numpy
 pyYAML
 evidently
+matplotlib
 dill
+-e .
