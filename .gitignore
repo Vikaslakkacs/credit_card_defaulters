@@ -130,3 +130,6 @@ dmypy.json
 
 # Conda environments
 /credit_card_defaulter
+
+# logs
+logs/

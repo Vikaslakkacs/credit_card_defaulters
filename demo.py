@@ -1,13 +1,4 @@
-class MyClass:
-    x = 0
-    y = ""
+from credit.logger import logging
 
-    def __init__(self, anyNumber, anyString):
-        self.x = anyNumber
-        self.y = anyString
-myObject = MyClass(12345, "Hello")
+logging.info("Hello This is sample log file")
 
-print(myObject.__str__())
-print(myObject)
-print(str(myObject))
-print(myObject.__repr__())
