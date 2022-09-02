@@ -13,7 +13,7 @@ class CreditException(Exception):
             error_message (Exception): Passing error message to Exception class
             error_details (sys): Passing details of the error (line no: row number no: etc) to sys class
         """
-        super.__init__(error_message) ## Exception class __init__(self, error_message)
+        super().__init__(error_message) ## Exception class __init__(self, error_message)
         self.error_message= CreditException.get_detailed_error_message(error_message= error_message,
                                                                         error_details= error_details)
     
