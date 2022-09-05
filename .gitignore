@@ -133,3 +133,5 @@ dmypy.json
 
 # logs
 logs/
+#Jupyter notebook
+notebook/
