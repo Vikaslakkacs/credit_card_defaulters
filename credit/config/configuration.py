@@ -27,7 +27,29 @@ class Configuration:
         Returns:
             DataIngestionConfig: Named Tuple with assigned configuration
         """
-        pass
+        try:
+            ingestion_config=self.config_info[DATA_INGESTION_CONFIG_KEY]
+            data_ingestion_folder= os.path.join(ROOT_DIR,
+                                                ingestion_config[DATA_INGESTION_ARTIFACT_DIR_KEY],
+                                                CURRENT_TIME_STAMP)
+
+            dataset_download_url=ingestion_config[DATA_INGESTION_DOWNLOAD_URL_KEY]
+
+            raw_data_dir=os.path.join(data_ingestion_folder, ingestion_config[DATA_INGESTION_RAW_DATA_DIR_KEY])
+            ingested_data_dir= os.path.join(data_ingestion_folder, ingestion_config[DATA_INGESTION_DIR_NAME_KEY])
+            ingested_train_dir=os.path.join(ingested_data_dir, ingestion_config[DATA_INGESTION_TRAIN_DIR_KEY])
+            ingested_test_dir=os.path.join(ingested_data_dir, ingestion_config[DATA_INGESTION_TEST_DIR_KEY])
+
+
+
+            data_ingestion_config= DataIngestionConfig(dataset_download_url=dataset_download_url
+                                                    ,raw_data_dir=raw_data_dir,
+                                                    ingested_train_dir=ingested_train_dir,
+                                                    ingested_test_dir=ingested_test_dir)
+            logging.info(f"Data ingestion Config: {data_ingestion_config}")
+            return data_ingestion_config
+        except Exception as e:
+            raise CreditException(e, sys) from e
 
     def get_training_pipeline_config(self)->TrainingPipelineConfig:
         """It generates pipeline configuration such as configuring directories such as where all
