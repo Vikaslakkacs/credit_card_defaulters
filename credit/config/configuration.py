@@ -28,8 +28,11 @@ class Configuration:
             DataIngestionConfig: Named Tuple with assigned configuration
         """
         try:
+            ### We can get the training artifact directory
             ingestion_config=self.config_info[DATA_INGESTION_CONFIG_KEY]
+            training_artifact_dir=self.get_training_pipeline_config().artifact_dir
             data_ingestion_folder= os.path.join(ROOT_DIR,
+                                                training_artifact_dir,
                                                 ingestion_config[DATA_INGESTION_ARTIFACT_DIR_KEY],
                                                 CURRENT_TIME_STAMP)
 
