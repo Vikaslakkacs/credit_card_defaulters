@@ -135,3 +135,5 @@ dmypy.json
 logs/
 #Jupyter notebook
 notebook/
+# artifacts
+credit/artifact/
