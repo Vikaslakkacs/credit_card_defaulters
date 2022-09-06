@@ -35,3 +35,8 @@ To run docker image
 docker run -p 5000:5000 -e PORT= 5000 <docker image id>
 <docker image id>: Can be found when 'docker images' command is ran
 ```
+
+To install packages from requirements using setup.py 
+```
+python setup.py install
+```

@@ -7,4 +7,6 @@ pyYAML
 evidently
 matplotlib
 dill
+imblearn
+opendatasets
 -e .

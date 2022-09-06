@@ -39,6 +39,7 @@ class Configuration:
             dataset_download_url=ingestion_config[DATA_INGESTION_DOWNLOAD_URL_KEY]
 
             raw_data_dir=os.path.join(data_ingestion_folder, ingestion_config[DATA_INGESTION_RAW_DATA_DIR_KEY])
+            balanced_data_dir= os.path.join(data_ingestion_folder,ingestion_config[DATA_INGESTION_BALANCED_DIR_KEY])
             ingested_data_dir= os.path.join(data_ingestion_folder, ingestion_config[DATA_INGESTION_DIR_NAME_KEY])
             ingested_train_dir=os.path.join(ingested_data_dir, ingestion_config[DATA_INGESTION_TRAIN_DIR_KEY])
             ingested_test_dir=os.path.join(ingested_data_dir, ingestion_config[DATA_INGESTION_TEST_DIR_KEY])
@@ -47,6 +48,7 @@ class Configuration:
 
             data_ingestion_config= DataIngestionConfig(dataset_download_url=dataset_download_url
                                                     ,raw_data_dir=raw_data_dir,
+                                                    balanced_data_dir=balanced_data_dir,
                                                     ingested_train_dir=ingested_train_dir,
                                                     ingested_test_dir=ingested_test_dir)
             logging.info(f"Data ingestion Config: {data_ingestion_config}")

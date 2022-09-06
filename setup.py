@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 from typing import List
 ##Declaring variabled for setup
 PROJECT_NAME="credit-card-defaulter"
-VERSION="0.0.1"
+VERSION="0.0.2"
 AUTHOR="Vikas Laka"
 PACKAGES=["credit"]
 REQUIREMENTS_FILE_NAME="requirements.txt"
