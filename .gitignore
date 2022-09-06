@@ -136,4 +136,4 @@ logs/
 #Jupyter notebook
 notebook/
 # artifacts
-credit/artifact/
+#credit/artifact/
