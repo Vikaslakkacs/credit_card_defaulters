@@ -8,7 +8,7 @@ import pandas as pd
 from imblearn.over_sampling import SMOTE
 from credit.constant import *
 import shutil
-
+from sklearn.model_selection import StratifiedShuffleSplit
 
 
 
@@ -52,7 +52,7 @@ class DataIngestion:
         logging.info(f"File has been downloaded in : {raw_file_name}")
         return raw_file_name
     
-    def create_balanced_dataset(self):
+    def create_balanced_dataset(self)->None:
         """When there is imbalance dataset, we will over sample the dataset using SMOTE process
         and create balanced dataset
         """
@@ -87,6 +87,60 @@ class DataIngestion:
             raise CreditException(e, sys) from e
 
 
+    def get_data_split(self)->DataIngestionArtifact:
+        """Splitting dataset into train and test and saving into respective folder paths
+        Train dataset: Will be used to train model
+        Test dataset: once model is ready testing happens with completely new dataset
+        """
+        try:
+            balanced_dataset_path= self.data_ingestion_config.balanced_data_dir
+            balanced_dataset_file_path= os.path.join(balanced_dataset_path, DATASET_FILE_NAME)
+            ## Create dataframe
+            balanced_df= pd.read_csv(balanced_dataset_file_path)
+            ## Input and Output
+            X_balanced=balanced_df.drop(columns=['defaulted'], axis=1)
+            y_balanced= balanced_df['defaulted']
+
+            ## Stratified split
+            sss= StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
+
+            ## Split the data
+            for train_index, test_index in sss.split(X_balanced,  y_balanced):
+                balanced_train_df= pd.concat([X_balanced.loc[train_index], y_balanced.loc[train_index]], axis=1)
+                balanced_test_df= pd.concat([X_balanced.loc[test_index], y_balanced.loc[test_index]], axis=1)
+
+            ### Create fodler paths for balanced train and test datasets
+            os.makedirs(self.data_ingestion_config.ingested_train_dir, exist_ok=True)
+            os.makedirs(self.data_ingestion_config.ingested_test_dir, exist_ok=True)
+
+            ingested_train_file_path= os.path.join(self.data_ingestion_config.ingested_train_dir, DATASET_FILE_NAME)
+            ingested_test_file_path= os.path.join(self.data_ingestion_config.ingested_test_dir, DATASET_FILE_NAME)
+
+            ## Save datasets to respective folder paths
+            balanced_train_df.to_csv(ingested_train_file_path)
+            balanced_test_df.to_csv(ingested_test_file_path)
+            data_ingestion_artifact= self.create_data_ingestion_artifact(ingested_train_file_path, ingested_test_file_path)
+
+            logging.info(f"ingested train and test datasets has been created. Details: {data_ingestion_artifact}")
+            return data_ingestion_artifact
+        except Exception as e:
+            raise CreditException(e, sys) from e
+
+    def create_data_ingestion_artifact(self, train_file_path, test_file_path)->DataIngestionArtifact:
+        """create Data ingestion artifact by considering train and test file paths
+
+        Returns:
+            DataIngestionArtifact: Tuple with data ingestion data
+        """
+        try:
+            data_ingestion_artifact= DataIngestionArtifact(train_file_path=train_file_path,
+                                                           test_file_path=test_file_path,
+                                                           is_ingested=True,
+                                                           message=f"Data ingestion is successful")
+            return data_ingestion_artifact
+        except Exception as e:
+            raise CreditException(e, sys) from e
+
     def initiate_data_ingestion(self)->DataIngestionArtifact:
         """Initiate data ingestion process to perform actions on dataset
 
@@ -100,8 +154,11 @@ class DataIngestion:
             logging.info(f"Data download has been successful.")
             ## balancing the dataset using SMOTE process
             balanced_dataset_path= self.create_balanced_dataset()
+            ##Create ingested train and test datasets by splitting
+            data_ingestion_artifact= self.get_data_split()
+            return data_ingestion_artifact
 
         except Exception as e:
             raise CreditException(e, sys) from e
-    
 
+        
