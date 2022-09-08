@@ -5,7 +5,7 @@ from credit.entity.config_entity import DataIngestionConfig, TrainingPipelineCon
 import yaml
 from credit.util.util import read_yaml_file
 from credit.constant import *
-
+from credit.entity.config_entity import DataValidationConfig
 class Configuration:
 
     """Creating configuration attributes for components involved
@@ -55,6 +55,43 @@ class Configuration:
             return data_ingestion_config
         except Exception as e:
             raise CreditException(e, sys) from e
+    
+    def get_data_validation_config(self)->DataValidationConfig:
+        """Validation of dataset is performed
+        1. Checking the data types of features
+        2. comparing new dataset with old data to check and deviations in features
+        and feature values
+
+        Returns:
+            DataValidationConfig: Tuple with Data validation details
+        """
+        try:
+            artifact_dir= self.train_pipeline_config.artifact_dir
+            data_validation_config= self.config_info[DATA_VALIDATION_CONFIG_KEY]
+
+            data_validation_artifact_dir= os.path.join(artifact_dir,
+                                                        data_validation_config[DATA_VALIDATION_ARTIFACT_DIR_KEY],
+                                                        CURRENT_TIME_STAMP)
+            ## Schema file path                                    
+            schema_file_path=os.path.join(data_validation_artifact_dir,
+                                            data_validation_config[DATA_VALIDATION_SCHEMA_DIR_KEY],
+                                            data_validation_config[DATA_VALIDATION_SCHEMA_FILE_KEY])
+            ## report file path
+            report_file_path= os.path.join(data_validation_artifact_dir,
+                                            data_validation_config[DATA_VALIDATION_REPORT_FILE_KEY])
+            ## report page file path
+            report_page_file_path= os.path.join(data_validation_artifact_dir,
+                                                data_validation_config[DATA_VALIDATION_REPORT_PAGE_FILE_KEY])
+
+            data_validation_config= DataValidationConfig(schema_file_path=schema_file_path,
+                                                         report_file_path=report_file_path,
+                                                         report_page_file_path=report_page_file_path)
+            logging.info(f"Data Validation is successful. Detail: {data_validation_config}")
+            return data_validation_config
+        except Exception as e:
+            raise CreditException(e, sys) from e
+
+
 
     def get_training_pipeline_config(self)->TrainingPipelineConfig:
         """It generates pipeline configuration such as configuring directories such as where all

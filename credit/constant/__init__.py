@@ -27,3 +27,11 @@ DATA_INGESTION_BALANCED_DIR_KEY="balanced_dataset_dir"
 DATA_INGESTION_DIR_NAME_KEY="ingested_dir"
 DATA_INGESTION_TRAIN_DIR_KEY="ingested_train_dir"
 DATA_INGESTION_TEST_DIR_KEY="ingested_test_dir"
+
+## Data validation pipeline
+DATA_VALIDATION_CONFIG_KEY="data_validation_config"
+DATA_VALIDATION_ARTIFACT_DIR_KEY= "data_validation_artifact_dir"
+DATA_VALIDATION_SCHEMA_DIR_KEY="schema_dir"
+DATA_VALIDATION_SCHEMA_FILE_KEY= "schema_file_name"
+DATA_VALIDATION_REPORT_FILE_KEY="report_file_name"
+DATA_VALIDATION_REPORT_PAGE_FILE_KEY="report_page_file_name"
