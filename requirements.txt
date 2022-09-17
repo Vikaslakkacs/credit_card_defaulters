@@ -8,5 +8,5 @@ evidently
 matplotlib
 dill
 imblearn
-opendatasets
+evidently
 -e .

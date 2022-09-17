@@ -20,6 +20,7 @@ def main():
     data_val= DataValidation(DataIngestionArtifact(train_file_path='/Users/vikaslakka/Desktop/FSDS/Machine_learning/Projects/Credit_card_defaulters/credit_card_defaulters/credit/artifact/data_ingestion/2022-09-08-17-41-44/ingested_data/train/credit_card_defaulters.csv', test_file_path='/Users/vikaslakka/Desktop/FSDS/Machine_learning/Projects/Credit_card_defaulters/credit_card_defaulters/credit/artifact/data_ingestion/2022-09-08-17-41-44/ingested_data/test/credit_card_defaulters.csv', is_ingested=True, message='Data ingestion is successful')
                             , config.get_data_validation_config())
     print(data_val.is_train_test_file_exists())
+    data_val.initiate_data_validation()
 
 if __name__=="__main__":
     main()

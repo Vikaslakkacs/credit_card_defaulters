@@ -40,3 +40,9 @@ To install packages from requirements using setup.py
 ```
 python setup.py install
 ```
+
+Data Drift:
+
+```
+When datset get changed, we call it as data drift.
+```
